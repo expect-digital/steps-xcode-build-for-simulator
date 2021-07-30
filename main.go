@@ -581,12 +581,12 @@ func exportArtifacts(proj xcodeproj.XcodeProj, scheme string, schemeBuildDir str
 			//
 			// xcodebuild -showBuildSettings will produce different outputs if you call it with a -workspace & -scheme or if you call it with a -project & -target.
 			// We need to call xcodebuild -showBuildSettings for all of the project targets to find the build artifacts (iOS, watchOS etc...)
-			splitTargetDir := strings.Split(buildDir, "build/")
+			splitTargetDir := strings.Split(buildDir, "build/ios")
 			if len(splitTargetDir) != 2 {
 				log.Debugf("failed to parse build target dir (%s) for target: %s. Using the original build dir (%s)\n", buildDir, target.Name, buildDir)
 				targetDir = buildDir
 			} else {
-				targetDir = splitTargetDir[1]
+				targetDir = filepath.Join("Products", splitTargetDir[1])
 			}
 		}
 
